@@ -35,7 +35,17 @@ class PrimitiveTests {
     Assert.assertEquals(2, relation.members.size)
     Assert.assertEquals(2, relation.membersWithRoles.size)
 
-    Assert.assertNotSame(relation.members, relation.membersWithRoles)
+  }
+
+  @Test
+  def addToModel() = {
+    val n1 = new Node(48.661667, 9.2125)
+    val way = new Way(List(n1))
+
+    val model = new Model
+    model.add(n1, way)
+
+    Assert.assertEquals(2, model.elements.size)
   }
 
 }

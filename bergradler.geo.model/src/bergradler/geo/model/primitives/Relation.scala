@@ -1,12 +1,12 @@
 package bergradler.geo.model.primitives
 
-class Relation(members: List[PrimitiveWithRole]) extends Primitive {
+class Relation(members: List[Primitive]) extends Primitive {
 
   def members(): List[Primitive] = {
-    members.map(primitiveWithRole => primitiveWithRole.primitive)
+    members
   }
 
-  def membersWithRoles(): List[PrimitiveWithRole] = {
+  def membersWithRoles(): List[Primitive] = {
     members
   }
 
