@@ -1,3 +1,6 @@
 
 /bergradler.geo.imex/bin
 /bergradler.geo.imex.test/bin
+/bergradler.geo.imex.test/.cache
+/bergradler.geo.model.test/.cache
+/bergradler.geo.model/.cache
