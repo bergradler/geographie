@@ -9,5 +9,5 @@ class Relation(members: List[Primitive]) extends Primitive {
   def membersWithRoles(): List[Primitive] = {
     members
   }
-
+  
 }

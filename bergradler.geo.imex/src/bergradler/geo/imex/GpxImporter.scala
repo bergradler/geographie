@@ -11,45 +11,56 @@ import bergradler.geo.model.primitives.Relation
 
 class GpxImporter(parser: GpxParser) {
 
-  var currentTrackSegment:ListBuffer[Node] = ListBuffer()
-  
-  var trackSegments:ListBuffer[Way] = ListBuffer()
-  
+  var currentTrackSegment: ListBuffer[Node] = ListBuffer()
+
+  var trackSegments: ListBuffer[Way] = ListBuffer()
+
+  var currentName: String = null
+
   def run: Model = {
     val model = new Model
 
     while (parser.hasNext) {
       val event = parser.next
       event.name match {
-        case "wpt" => 
+        case "wpt" =>
           model.add(parseWpt(event))
-        case "trk" =>   
+        case "trk" =>
           processCollectedTrkInfo(model)
           trackSegments.clear
           currentTrackSegment.clear
-        case "trkseg" => 
-          trackSegments += new Way(currentTrackSegment.toList)
+        case "trkseg" =>
+          if (!currentTrackSegment.isEmpty) {
+            trackSegments += new Way(currentTrackSegment.toList)
+          }
           currentTrackSegment.clear
-        case "trkpt" => 
-          currentTrackSegment+=parseWpt(event)
+        case "trkpt" =>
+          currentTrackSegment += parseWpt(event)
+        case "name" =>
+          currentName = event.text
         case _ =>
       }
     }
     processCollectedTrkInfo(model)
+    trackSegments.clear
+    currentTrackSegment.clear
     model
   }
 
   private def parseWpt(event: GpxElement): Node = {
-	val lat = event.attribute("lat").get.toDouble
-	val lon = event.attribute("lon").get.toDouble
-	val ele =  event.attribute("ele").flatMap(e => Some(e.toDouble))
+    val lat = event.attribute("lat").get.toDouble
+    val lon = event.attribute("lon").get.toDouble
+    val ele = event.attribute("ele").flatMap(e => Some(e.toDouble))
     new Node(lat, lon, ele)
   }
-  
+
   private def processCollectedTrkInfo(model: Model) = {
-    if(!currentTrackSegment.isEmpty){
-      trackSegments+=new Way(currentTrackSegment.toList)
-      model.add(new Relation(trackSegments.toList))
+    if (!currentTrackSegment.isEmpty) {
+      val way = new Way(currentTrackSegment.toList)
+      trackSegments += way
+      val relation = new Relation(trackSegments.toList)
+      relation.tags.put("name", currentName)
+      model.add(relation)
     }
   }
 
