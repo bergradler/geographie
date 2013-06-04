@@ -8,6 +8,8 @@ trait GpxParser {
   
   def next:GpxElement
   
+  def peek:Option[GpxElement]
+  
   def hasNext:Boolean
   
   def close

@@ -7,3 +7,7 @@ trait Primitive extends TaggedElement{
   }
   
 }
+
+object Primitive{
+  
+}

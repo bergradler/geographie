@@ -11,6 +11,8 @@ trait GpxElement {
   def attribute(name:String):Option[String]
 
   def text:String
+  
+  def isStart:Boolean
 }
 
 object Skip extends GpxElement{
@@ -32,6 +34,10 @@ object Skip extends GpxElement{
 
   def text:String={
     null
+  }
+  
+  def isStart={
+    false
   }
 }
 
