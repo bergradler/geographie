@@ -15,6 +15,7 @@ import javax.xml.XMLConstants
 import bergradler.geo.imex.Skip
 import javax.xml.stream.events.StartElement
 import javax.xml.stream.events.EndElement
+import javax.xml.stream.XMLStreamException
 
 class JdkStaxParser extends GpxParser {
 
@@ -22,7 +23,7 @@ class JdkStaxParser extends GpxParser {
 
   var reader: XMLEventReader = null
 
-  def setInput(input: File) = {
+  def prepare(input: File) = {
     if (inStream != null) {
       throw new RuntimeException("Parser cannot be reused.")
     }
@@ -76,11 +77,6 @@ class JdkStaxParser extends GpxParser {
       }
 
       def text: String = {
-        val nextEventType = reader.peek.getEventType()
-        if(nextEventType != XMLStreamConstants.CHARACTERS){
-          return null
-        }
-        
         reader.getElementText()
       }
 

@@ -4,7 +4,7 @@ import java.io.File
 
 trait GpxParser {
 
-  def setInput(input:File)
+  def prepare(input:File)
   
   def next:GpxElement
   

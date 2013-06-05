@@ -1,7 +1,6 @@
-/**
- *
- */
 package bergradler.geo.imex
+
+import java.io.File
 
 trait GpxWriter {
 
@@ -9,7 +8,7 @@ trait GpxWriter {
 
   val tabChar = "\t"
 
-  def prepare
+  def prepare(output:File)
 
   def startDocument
 

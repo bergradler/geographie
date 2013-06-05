@@ -1,16 +1,13 @@
 package bergradler.geo.model.primitives
 
-class Way(val nodes: List[Node]) extends Primitive with Iterable[Node] {
+class Way(val nodes: List[Node]) extends Primitive {
 
   def nodeCount(): Integer = {
     nodes.size
   }
   
   def walk(v:Node=>Unit)={
-    foreach(v)
+    nodes.foreach(v)
   }
   
-  def iterator={
-    nodes.iterator
-  }
 }

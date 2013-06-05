@@ -9,12 +9,14 @@ import scala.collection.mutable.ListBuffer
 import bergradler.geo.model.primitives.Way
 import bergradler.geo.model.primitives.Relation
 import bergradler.geo.model.primitives.TaggedElement
+import java.io.File
 
-class GpxImporter(parser: GpxParser) {
+class GpxImporter(parser: GpxParser, output:File) {
 
   var builder: PrimitiveBuilder = null
 
   def run: Model = {
+    parser.prepare(output)
     val model = new Model
     builder = new NoneBuilder(model)
     while (parser.hasNext && builder != null) {

@@ -1,6 +1,3 @@
-/**
- *
- */
 package bergradler.geo.imex
 
 import bergradler.geo.model.primitives.Model
@@ -9,12 +6,13 @@ import bergradler.geo.model.primitives.Way
 import bergradler.geo.model.primitives.Way
 import bergradler.geo.model.primitives.Relation
 import bergradler.geo.model.primitives.TaggedElement
+import java.io.File
 
-class GpxExporter(writer: GpxWriter) {
+class GpxExporter(writer: GpxWriter, output:File) {
 
   def run(model: Model) = {
 
-    writer.prepare
+    writer.prepare(output)
 
     exportModel(model)
 
@@ -41,6 +39,8 @@ class GpxExporter(writer: GpxWriter) {
     writer.attribute("creator", getClass().getName())
     writer.attribute("version", "1.1")
     writer.attribute("xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd")
+    writer.attribute("xmlns","http://www.topografix.com/GPX/1/1" )
+    writer.attribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance")
     writer.newline
   }
 
@@ -64,16 +64,14 @@ class GpxExporter(writer: GpxWriter) {
     writer.attribute("lon", node.lon.toString)
     writer.newline
     node.ele.foreach(ele => writer.element("ele", ele.toString))
-    exportTag(node, "name")
-    exportTag(node, "type")
-    exportTag(node, "time")
+    node.tags.foreach(e=>writer.element(e._1, e._2))
     writer.endElement(name)
     writer.newline
   }
 
   private def exportWay(taggedElement:TaggedElement, nodes:List[Node]) = {
     writer.startElement("trk")
-    taggedElement.tags.get("name").foreach(writer.element("name", _))
+    taggedElement.tags.foreach(e=>writer.element(e._1, e._2))
     writer.startElement("trkseg")
     nodes.foreach(n => exportNode(n, "trkpt"))
     writer.endElement("trkseg")
@@ -81,11 +79,11 @@ class GpxExporter(writer: GpxWriter) {
   }
 
   private def exportWayGroup(relation: Relation) = {
-	  exportWay(relation, relation)
+	  exportWay(relation, Relation.relation2Nodes(relation))
   }
 
-  private def exportTag(node: Node, name: String) = {
-    node.tags.get(name).foreach(value => writer.element(name, value))
+  private def exportTag(taggedElement: TaggedElement, name: String) = {
+    taggedElement.tags.get(name).foreach(value => writer.element(name, value))
   }
 
 }

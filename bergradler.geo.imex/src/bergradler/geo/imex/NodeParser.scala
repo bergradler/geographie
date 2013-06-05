@@ -1,6 +1,6 @@
 package bergradler.geo.imex
 
-import bergradler.geo.model.primitives.Node
+import bergradler.geo.model.primitives.mutable.Node
 
 trait NodeParser {
 
@@ -11,5 +11,5 @@ trait NodeParser {
 
     new Node(lat, lon, ele)
   }
-  
+
 }

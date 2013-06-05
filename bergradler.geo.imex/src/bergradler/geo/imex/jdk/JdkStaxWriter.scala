@@ -1,6 +1,3 @@
-/**
- *
- */
 package bergradler.geo.imex.jdk
 
 import bergradler.geo.imex.GpxWriter
@@ -10,7 +7,7 @@ import javax.xml.stream.XMLOutputFactory
 import javax.xml.stream.XMLEventWriter
 import javax.xml.stream.XMLEventFactory
 
-class JdkStaxWriter(output: File) extends GpxWriter {
+class JdkStaxWriter extends GpxWriter {
 
   var outStream: FileOutputStream = null
 
@@ -18,7 +15,7 @@ class JdkStaxWriter(output: File) extends GpxWriter {
 
   var eventFactory: XMLEventFactory = null
 
-  def prepare = {
+  def prepare(output: File) = {
     outStream = new FileOutputStream(output)
     eventWriter = XMLOutputFactory.newInstance().createXMLEventWriter(outStream, "utf-8")
     eventFactory = XMLEventFactory.newInstance()

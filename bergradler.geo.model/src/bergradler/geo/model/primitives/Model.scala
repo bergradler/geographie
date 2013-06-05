@@ -6,10 +6,14 @@ import scala.collection.Iterable
 
 class Model {
 
-  val elements: ListBuffer[Primitive] = ListBuffer()
+  var elements: List[Primitive] = List()
 
-  def add(element: Primitive*) = {
-    elements ++= element
+  def addAll(element: List[Primitive]) = {
+    elements = elements ++ element
+  }
+  
+  def add(element: Primitive) = {
+    elements = elements :+ element
   }
 
   
@@ -24,5 +28,4 @@ class Model {
   def relations:Iterable[Relation]={
     elements.toIterable.filter(p => p.isInstanceOf[Relation]).map(r => r.asInstanceOf[Relation])
   }
-  
 }

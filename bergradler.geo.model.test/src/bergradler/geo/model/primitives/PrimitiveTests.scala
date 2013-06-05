@@ -43,7 +43,7 @@ class PrimitiveTests {
     val way = new Way(List(n1))
 
     val model = new Model
-    model.add(n1, way)
+    model.addAll(List(n1, way))
 
     Assert.assertEquals(2, model.elements.size)
   }
