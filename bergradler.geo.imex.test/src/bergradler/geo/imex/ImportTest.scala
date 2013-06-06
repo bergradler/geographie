@@ -34,7 +34,7 @@ class ImportTest {
   @Test
   def wptName():Unit={
     val huette = model.elements.apply(1)
-    Assert.assertEquals("Westgipfelhütte", huette.tags.get("name").get)
+    Assert.assertEquals("WestgipfelhÃ¼tte", huette.tags.get("name").get)
   }
   
   @Test

@@ -27,7 +27,6 @@ class JdkXmlFormatter extends XmlFormatter {
     val transformer = transformerFactory.newTransformer();
     transformer.setOutputProperty(OutputKeys.INDENT, "yes");
     transformer.transform(xmlInput, xmlOutput);
-    return xmlOutput.getWriter().w
   }
 
 }

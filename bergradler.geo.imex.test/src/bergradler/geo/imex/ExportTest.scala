@@ -60,6 +60,17 @@ class ExportTest {
     importedModel.elements.zip(reimportedModel.elements).foreach(p =>
       compare(p._1, p._2))
   }
+  
+  @Test
+  def formatExport()={
+    val importedModel = importModel("test/test.gpx")
+
+    val writer = new JdkStaxWriter()
+    val exporter = new GpxExporter(writer, new File("test/out.gpx"))
+
+    exporter.run(importedModel)
+    
+  }
 
   private def compare(alpha: Primitive, beta: Primitive) = {
     alpha match {
