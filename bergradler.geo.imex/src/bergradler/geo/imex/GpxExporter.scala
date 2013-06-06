@@ -54,7 +54,7 @@ class GpxExporter(writer: GpxWriter, output:File) {
   }
 
   private def exportWays(model: Model) = {
-    model.ways.foreach(w => exportWay(w, w.nodes))
+    model.ways.foreach(w => exportWay(w, List(w.nodes)))
     model.relations.foreach(r => exportWayGroup(r))
   }
 
@@ -69,13 +69,17 @@ class GpxExporter(writer: GpxWriter, output:File) {
     writer.newline
   }
 
-  private def exportWay(taggedElement:TaggedElement, nodes:List[Node]) = {
+  private def exportWay(taggedElement:TaggedElement, nodes:List[List[Node]]) = {
     writer.startElement("trk")
     taggedElement.tags.foreach(e=>writer.element(e._1, e._2))
-    writer.startElement("trkseg")
-    nodes.foreach(n => exportNode(n, "trkpt"))
-    writer.endElement("trkseg")
+    nodes.foreach(wayNodes=>exportWayFragment(wayNodes))
     writer.endElement("trk")
+  }
+  
+  private def exportWayFragment(nodes:List[Node]) = {
+    writer.startElement("trkseg")
+    nodes.foreach(wayNode=>exportNode(wayNode, "trkpt"))
+    writer.endElement("trkseg")
   }
 
   private def exportWayGroup(relation: Relation) = {

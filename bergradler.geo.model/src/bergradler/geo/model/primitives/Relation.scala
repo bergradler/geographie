@@ -15,8 +15,7 @@ class Relation(members: List[Primitive]) extends Primitive {
 }
 
 object Relation {
-  def relation2Nodes(relation: Relation): List[Node] = {
-    val ways = relation.members.collect { case way: Way if way.isInstanceOf[Way] => way.nodes }
-    ways.flatten
+  def relation2Nodes(relation: Relation): List[List[Node]] = {
+    relation.members.collect { case way: Way if way.isInstanceOf[Way] => way.nodes }
   }
 }
