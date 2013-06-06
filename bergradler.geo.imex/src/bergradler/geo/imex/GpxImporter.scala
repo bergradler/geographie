@@ -11,7 +11,7 @@ import bergradler.geo.model.primitives.Relation
 import bergradler.geo.model.primitives.TaggedElement
 import java.io.File
 
-class GpxImporter(parser: GpxParser, output:File) {
+class GpxImporter(parser: GpxParser, output: File) {
 
   var builder: PrimitiveBuilder = null
 
@@ -26,5 +26,4 @@ class GpxImporter(parser: GpxParser, output:File) {
     model
   }
 
-  
 }

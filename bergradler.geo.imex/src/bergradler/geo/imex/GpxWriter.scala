@@ -8,7 +8,7 @@ trait GpxWriter {
 
   val tabChar = "\t"
 
-  def prepare(output:File)
+  def prepare(output: File)
 
   def startDocument
 
@@ -17,28 +17,28 @@ trait GpxWriter {
   def startElement(name: String)
 
   def endElement(name: String)
-  
-  def attribute(name:String, value:String)
+
+  def attribute(name: String, value: String)
 
   def characters(content: String)
 
   def dtd(ctrl: String)
 
-  def newline={
+  def newline = {
     dtd(newlineChar)
   }
-  
-  def tab={
+
+  def tab = {
     dtd(tabChar)
   }
-  
-  def element(name:String,content:String)={
+
+  def element(name: String, content: String) = {
     startElement(name)
     characters(content)
     endElement(name)
     newline
   }
-  
+
   def close
 
 }

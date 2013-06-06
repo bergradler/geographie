@@ -30,15 +30,15 @@ class ImportTest {
   def correctNumberOfElements(): Unit = {
     Assert.assertEquals(5, model.elements.size)
   }
-  
+
   @Test
-  def wptName():Unit={
+  def wptName(): Unit = {
     val huette = model.elements.apply(1)
     Assert.assertEquals("Westgipfelhütte", huette.tags.get("name").get)
   }
-  
+
   @Test
-  def eleInTrkPt():Unit={
+  def eleInTrkPt(): Unit = {
     val relation = model.elements.last.asInstanceOf[Relation]
     val way = relation.members.last.asInstanceOf[Way]
     val trkPtWithEle = way.nodes.last
@@ -53,7 +53,7 @@ class ImportTest {
     model.elements.filter(e => e.isInstanceOf[Relation]).foldLeft("")((last, current) =>
       assertNotSameAndReturn(last, current.tags.get("name").get))
   }
-  
+
   @Test
   def trkSegs(): Unit = {
     val last = model.elements.last

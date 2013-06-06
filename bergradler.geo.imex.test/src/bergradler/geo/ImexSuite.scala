@@ -7,7 +7,7 @@ import org.junit.runners.Suite
 import bergradler.geo.model.primitives.PrimitiveTests
 
 @RunWith(classOf[Suite])
-@SuiteClasses(Array(classOf[ImportTest],classOf[ExportTest], classOf[PrimitiveTests]))
+@SuiteClasses(Array(classOf[ImportTest], classOf[ExportTest], classOf[PrimitiveTests]))
 class ImexSuite {
 
 }
